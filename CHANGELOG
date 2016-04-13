@@ -1,0 +1,10 @@
+commit + 06dd368	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 68
+Author: ISU-COM_S-327 <>
+Date:   19 minutes ago
+
+    initial commit
+
+ LICENSE   | 8 ++++++++
+ README.md | 3 +++
+ 2 files changed, 11 insertions(+)

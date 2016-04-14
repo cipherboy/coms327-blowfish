@@ -1,7 +1,22 @@
-commit + 06dd368	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
-log size 68
+commit + d13f228	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 100
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   19 hours ago
+
+    Project framework
+
+ CHANGELOG       | 10 ++++++++++
+ Makefile        | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ README.md       | 21 ++++++++++++++++++--
+ src/blowfish.cc | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/blowfish.h  | 37 ++++++++++++++++++++++++++++++++++++
+ src/main.cc     | 46 ++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 224 insertions(+), 2 deletions(-)
+
+commit + 06dd368 d13f228	refs/heads/master
+log size 66
 Author: ISU-COM_S-327 <>
-Date:   19 minutes ago
+Date:   22 hours ago
 
     initial commit
 

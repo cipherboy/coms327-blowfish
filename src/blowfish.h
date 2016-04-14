@@ -22,14 +22,16 @@ class blowfish
 {
 private:
     char* key;
+    int key_length; // In bytes
     uint32_t subkeys[18];
     uint32_t sboxes[4][256];
 
-    void function_f(uint32_t data, uint32_t bytes);
-
+    uint32_t function_f(uint32_t data);
+    void encrypt_helper(uint32_t* left, uint32_t* right);
+    void decrypt_helper(uint32_t* left, uint32_t* right);
 public:
     char* encrypt(char bytes[8]);
-    void decrypt(char bytes[8], char* plaintext);
+    char* decrypt(char data[8]);
 
     blowfish(char key_data[32]);
 };

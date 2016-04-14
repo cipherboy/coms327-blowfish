@@ -24,7 +24,6 @@ int main(int argc, char* argv[])
     b[0] = (uint8_t) (temp >> 24u);
     uint32_t left = *((uint32_t*) &b);
 
-
     b[3] = (uint8_t) (temp >> 32u);
     b[2] = (uint8_t) (temp >> 40u);
     b[1] = (uint8_t) (temp >> 48u);

@@ -1,7 +1,27 @@
-commit + d26619f	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+commit + ff4f5ec	refs/heads/master (HEAD -> refs/heads/master)
+log size 131
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   13 seconds ago
+
+    Renamed headers to .hh; started ECB block mode
+
+ CHANGELOG           |  32 ++++++++++++++-----
+ Makefile            |   2 +-
+ bin/tests           | Bin 59976 -> 0 bytes
+ main/main.cc        |  23 +++++++++-----
+ src/blowfish.cc     |  87 +++++++++++++++++++---------------------------------
+ src/blowfish.h      |  35 ---------------------
+ src/blowfish.hh     |  35 +++++++++++++++++++++
+ src/blowfish_ecb.cc |  65 +++++++++++++++++++++++++++++++++++++++
+ src/blowfish_ecb.hh |  23 ++++++++++++++
+ tests/schneier.cc   |   2 +-
+ tests/vectors.cc    |   2 --
+ 11 files changed, 196 insertions(+), 110 deletions(-)
+
+commit + d26619f ff4f5ec	refs/remotes/origin/HEAD (refs/remotes/origin/master, refs/remotes/origin/HEAD)
 log size 116
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   67 minutes ago
+Date:   69 minutes ago
 
     Additional test cases: set_keys
 
@@ -14,10 +34,10 @@ Date:   67 minutes ago
  tests/schneier.cc |  65 +++++++++++++++++++++++++++++++++++++++++
  7 files changed, 181 insertions(+), 56 deletions(-)
 
-commit + 1c0a4e8 d26619f	refs/heads/master
+commit + 1c0a4e8 d26619f	refs/remotes/origin/HEAD
 log size 110
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   87 minutes ago
+Date:   89 minutes ago
 
     Automated build of tests.
 
@@ -29,7 +49,7 @@ Date:   87 minutes ago
  tests/vectors.cc  |  16 +++-
  6 files changed, 197 insertions(+), 158 deletions(-)
 
-commit + a8ef3f8 1c0a4e8	refs/heads/master
+commit + a8ef3f8 1c0a4e8	refs/remotes/origin/HEAD
 log size 116
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   2 hours ago
@@ -45,7 +65,7 @@ Date:   2 hours ago
  tests/vectors.cc  |  10 ++++
  7 files changed, 219 insertions(+), 28 deletions(-)
 
-commit + 9858898 a8ef3f8	refs/heads/master
+commit + 9858898 a8ef3f8	refs/remotes/origin/HEAD
 log size 101
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   4 hours ago
@@ -58,7 +78,7 @@ Date:   4 hours ago
  bin/.keep  |  0
  4 files changed, 18 insertions(+), 6 deletions(-)
 
-commit + 5385496 9858898	refs/heads/master
+commit + 5385496 9858898	refs/remotes/origin/HEAD
 log size 106
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   5 hours ago
@@ -70,7 +90,7 @@ Date:   5 hours ago
  src/main.cc     |  20 ++++-------
  3 files changed, 74 insertions(+), 81 deletions(-)
 
-commit + de0ba9f 5385496	refs/heads/master
+commit + de0ba9f 5385496	refs/remotes/origin/HEAD
 log size 99
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   6 hours ago
@@ -83,7 +103,7 @@ Date:   6 hours ago
  src/main.cc     |  66 ++++++++++++---------
  4 files changed, 155 insertions(+), 120 deletions(-)
 
-commit + e05dc03 de0ba9f	refs/heads/master
+commit + e05dc03 de0ba9f	refs/remotes/origin/HEAD
 log size 118
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   27 hours ago
@@ -97,7 +117,7 @@ Date:   27 hours ago
  src/main.cc     |   1 -
  5 files changed, 245 insertions(+), 9 deletions(-)
 
-commit + d13f228 e05dc03	refs/heads/master
+commit + d13f228 e05dc03	refs/remotes/origin/HEAD
 log size 98
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   2 days ago
@@ -112,7 +132,7 @@ Date:   2 days ago
  src/main.cc     | 46 ++++++++++++++++++++++++++++++++++++++++++++
  6 files changed, 224 insertions(+), 2 deletions(-)
 
-commit + 06dd368 d13f228	refs/heads/master
+commit + 06dd368 d13f228	refs/remotes/origin/HEAD
 log size 64
 Author: ISU-COM_S-327 <>
 Date:   2 days ago

@@ -3,6 +3,7 @@ config.log
 configure
 autom4te.cache/
 bin/blowfish
+bin/tests
 
 valgrind.log
 

@@ -4,7 +4,7 @@
  * main method
 */
 
-#include "blowfish.h"
+#include "../src/blowfish.h"
 
 #include <cstdint>
 #include <iostream>

@@ -1,4 +1,20 @@
-commit + 9858898	refs/heads/master (HEAD -> refs/heads/master)
+commit + a8ef3f8	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 118
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   8 minutes ago
+
+    Passing test cases: Bruce Schneier
+
+ CHANGELOG         |  31 ++++++++----
+ docs/tests.txt    |  34 +++++++++++++
+ src/blowfish.cc   |  18 +++----
+ src/blowfish.h    |   4 +-
+ src/main.cc       |  10 +---
+ tests/schneier.cc | 140 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tests/vectors.cc  |  10 ++++
+ 7 files changed, 219 insertions(+), 28 deletions(-)
+
+commit + 9858898 a8ef3f8	refs/heads/master
 log size 101
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   2 hours ago
@@ -11,7 +27,7 @@ Date:   2 hours ago
  bin/.keep  |  0
  4 files changed, 18 insertions(+), 6 deletions(-)
 
-commit + 5385496 9858898	refs/remotes/origin/HEAD (refs/remotes/origin/master, refs/remotes/origin/HEAD)
+commit + 5385496 9858898	refs/heads/master
 log size 106
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   3 hours ago
@@ -23,7 +39,7 @@ Date:   3 hours ago
  src/main.cc     |  20 ++++-------
  3 files changed, 74 insertions(+), 81 deletions(-)
 
-commit + de0ba9f 5385496	refs/remotes/origin/HEAD
+commit + de0ba9f 5385496	refs/heads/master
 log size 99
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   5 hours ago
@@ -36,7 +52,7 @@ Date:   5 hours ago
  src/main.cc     |  66 ++++++++++++---------
  4 files changed, 155 insertions(+), 120 deletions(-)
 
-commit + e05dc03 de0ba9f	refs/remotes/origin/HEAD
+commit + e05dc03 de0ba9f	refs/heads/master
 log size 118
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   25 hours ago
@@ -50,7 +66,7 @@ Date:   25 hours ago
  src/main.cc     |   1 -
  5 files changed, 245 insertions(+), 9 deletions(-)
 
-commit + d13f228 e05dc03	refs/remotes/origin/HEAD
+commit + d13f228 e05dc03	refs/heads/master
 log size 98
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   2 days ago
@@ -65,7 +81,7 @@ Date:   2 days ago
  src/main.cc     | 46 ++++++++++++++++++++++++++++++++++++++++++++
  6 files changed, 224 insertions(+), 2 deletions(-)
 
-commit + 06dd368 d13f228	refs/remotes/origin/HEAD
+commit + 06dd368 d13f228	refs/heads/master
 log size 64
 Author: ISU-COM_S-327 <>
 Date:   2 days ago

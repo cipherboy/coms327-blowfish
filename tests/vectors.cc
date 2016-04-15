@@ -2,9 +2,19 @@
 #include <cstdlib>
 #include <iostream>
 
+extern bool schneier_ecb_test();
+extern bool schneier_set_key_test();
 
-extern bool ecb_test();
+int main(void)
+{
+    if (!schneier_ecb_test()) {
+        std::cout << "Tests failed" << std::endl;
+        return 1;
+    }
 
-int main(void) {
-    ecb_test();
+    if (!schneier_set_key_test()) {
+        std::cout << "Tests failed" << std::endl;
+        return 1;
+    }
+    return 0;
 }

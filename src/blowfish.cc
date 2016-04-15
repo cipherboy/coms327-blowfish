@@ -4,7 +4,7 @@
  * Implement for blowfish cryptographic primitive
 */
 
-#include "blowfish.h"
+#include "blowfish.hh"
 
 #include <stdio.h>
 #include <cstdlib>
@@ -45,31 +45,31 @@ blowfish::blowfish(char* key_data, int key_length)
     }
 
     for (i = 0; i < 18; i+=2) {
-        this-> encrypt(&zero_left, &zero_right);
+        this->encrypt(&zero_left, &zero_right);
         this->subkeys[i] = zero_left;
         this->subkeys[i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this-> encrypt(&zero_left, &zero_right);
+        this->encrypt(&zero_left, &zero_right);
         this->sboxes[0][i] = zero_left;
         this->sboxes[0][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this-> encrypt(&zero_left, &zero_right);
+        this->encrypt(&zero_left, &zero_right);
         this->sboxes[1][i] = zero_left;
         this->sboxes[1][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this-> encrypt(&zero_left, &zero_right);
+        this->encrypt(&zero_left, &zero_right);
         this->sboxes[2][i] = zero_left;
         this->sboxes[2][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this-> encrypt(&zero_left, &zero_right);
+        this->encrypt(&zero_left, &zero_right);
         this->sboxes[3][i] = zero_left;
         this->sboxes[3][i+1] = zero_right;
     }
@@ -87,7 +87,7 @@ uint32_t blowfish::function_f(uint32_t data)
     return result;
 }
 
-void blowfish:: encrypt(uint32_t* left, uint32_t* right)
+void blowfish::encrypt(uint32_t* left, uint32_t* right)
 {
     int i = 0;
     uint32_t tmp = *left;
@@ -124,7 +124,7 @@ void blowfish:: encrypt(uint32_t* left, uint32_t* right)
     *left = l;
 }
 
-void blowfish:: decrypt(uint32_t* left, uint32_t* right)
+void blowfish::decrypt(uint32_t* left, uint32_t* right)
 {
     int i = 0;
     uint32_t tmp = *left;
@@ -163,72 +163,49 @@ void blowfish:: decrypt(uint32_t* left, uint32_t* right)
 
 char* blowfish::encrypt(char data[8])
 {
-    uint64_t temp;
-    uint8_t b[4];
     uint32_t left;
     uint32_t right;
     char* result;
 
     result = (char *) malloc(sizeof(char) * 8);
-    temp = *((uint64_t *) &data);
-    b[3] = (uint8_t) (temp >>  0u);
-    b[2] = (uint8_t) (temp >>  8u);
-    b[1] = (uint8_t) (temp >> 16u);
-    b[0] = (uint8_t) (temp >> 24u);
-    right = *((uint32_t*) &b);
-    b[3] = (uint8_t) (temp >> 32u);
-    b[2] = (uint8_t) (temp >> 40u);
-    b[1] = (uint8_t) (temp >> 48u);
-    b[0] = (uint8_t) (temp >> 56u);
-    left = *((uint32_t*) &b);
 
-    this-> encrypt(&left, &right);
+    left = ((uint8_t) data[0] << 24) + ((uint8_t) data[1] << 16) + ((uint8_t) data[2] << 8) + (uint8_t) data[3];
+    right = ((uint8_t) data[4] << 24) + ((uint8_t) data[5] << 16) + ((uint8_t) data[6] << 8) + (uint8_t) data[7];
 
-    result[0] = left & 0xFF000000;
-    result[1] = left & 0x00FF0000;
-    result[2] = left & 0x0000FF00;
+    this->encrypt(&left, &right);
+
+    result[0] = (left & 0xFF000000) >> 24;
+    result[1] = (left & 0x00FF0000) >> 16;
+    result[2] = (left & 0x0000FF00) >> 8;
     result[3] = left & 0x000000FF;
-    result[4] = right & 0xFF000000;
-    result[5] = right & 0x00FF0000;
-    result[6] = right & 0x0000FF00;
+    result[4] = (right & 0xFF000000) >> 24;
+    result[5] = (right & 0x00FF0000) >> 16;
+    result[6] = (right & 0x0000FF00) >> 8;
     result[7] = right & 0x000000FF;
-
     return result;
+
 }
 
 char* blowfish::decrypt(char data[8])
 {
-    uint64_t temp;
-    uint8_t b[4];
     uint32_t left;
     uint32_t right;
     char* result;
 
     result = (char *) malloc(sizeof(char) * 8);
 
-    // Bytes are in reverse order of what we want. Therefore, asign right
-    // from the reversed left bytes, and left from the reversed right bytes.
-    temp = *((uint64_t *) &data);
-    b[3] = (uint8_t) (temp >>  0u);
-    b[2] = (uint8_t) (temp >>  8u);
-    b[1] = (uint8_t) (temp >> 16u);
-    b[0] = (uint8_t) (temp >> 24u);
-    right = *((uint32_t*) &b);
-    b[3] = (uint8_t) (temp >> 32u);
-    b[2] = (uint8_t) (temp >> 40u);
-    b[1] = (uint8_t) (temp >> 48u);
-    b[0] = (uint8_t) (temp >> 56u);
-    left = *((uint32_t*) &b);
+    left = ((uint8_t) data[0] << 24) + ((uint8_t) data[1] << 16) + ((uint8_t) data[2] << 8) + (uint8_t) data[3];
+    right = ((uint8_t) data[4] << 24) + ((uint8_t) data[5] << 16) + ((uint8_t) data[6] << 8) + (uint8_t) data[7];
 
-    this-> decrypt(&left, &right);
+    this->decrypt(&left, &right);
 
-    result[0] = left & 0xFF000000;
-    result[1] = left & 0x00FF0000;
-    result[2] = left & 0x0000FF00;
+    result[0] = (left & 0xFF000000) >> 24;
+    result[1] = (left & 0x00FF0000) >> 16;
+    result[2] = (left & 0x0000FF00) >> 8;
     result[3] = left & 0x000000FF;
-    result[4] = right & 0xFF000000;
-    result[5] = right & 0x00FF0000;
-    result[6] = right & 0x0000FF00;
+    result[4] = (right & 0xFF000000) >> 24;
+    result[5] = (right & 0x00FF0000) >> 16;
+    result[6] = (right & 0x0000FF00) >> 8;
     result[7] = right & 0x000000FF;
 
     return result;

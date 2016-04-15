@@ -31,7 +31,7 @@ clean:
 
 format:
 	astyle --style=linux ./*/*.cc || true
-	astyle --style=linux ./*/*.h || true
+	astyle --style=linux ./*/*.hh || true
 
 	rm -f ./*/*.orig
 changelog: .git

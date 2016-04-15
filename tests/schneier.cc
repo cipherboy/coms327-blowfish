@@ -1,4 +1,4 @@
-#include "../src/blowfish.h"
+#include "../src/blowfish.hh"
 #include <cstdlib>
 #include <iostream>
 

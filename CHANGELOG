@@ -1,7 +1,23 @@
-commit + 1c0a4e8	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+commit + d26619f	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 116
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   67 minutes ago
+
+    Additional test cases: set_keys
+
+ CHANGELOG         |  25 ++++++++++++----
+ bin/tests         | Bin 0 -> 59976 bytes
+ docs/tests.txt    |  34 ----------------------
+ docs/vectors.txt  |  85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/blowfish.cc   |  16 ++++------
+ src/blowfish.h    |  12 ++++----
+ tests/schneier.cc |  65 +++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 181 insertions(+), 56 deletions(-)
+
+commit + 1c0a4e8 d26619f	refs/heads/master
 log size 110
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   19 minutes ago
+Date:   87 minutes ago
 
     Automated build of tests.
 
@@ -14,9 +30,9 @@ Date:   19 minutes ago
  6 files changed, 197 insertions(+), 158 deletions(-)
 
 commit + a8ef3f8 1c0a4e8	refs/heads/master
-log size 119
+log size 116
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   28 minutes ago
+Date:   2 hours ago
 
     Passing test cases: Bruce Schneier
 
@@ -32,7 +48,7 @@ Date:   28 minutes ago
 commit + 9858898 a8ef3f8	refs/heads/master
 log size 101
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   3 hours ago
+Date:   4 hours ago
 
     Fixed bin directory
 
@@ -45,7 +61,7 @@ Date:   3 hours ago
 commit + 5385496 9858898	refs/heads/master
 log size 106
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   4 hours ago
+Date:   5 hours ago
 
     Fixed key initialization
 
@@ -57,7 +73,7 @@ Date:   4 hours ago
 commit + de0ba9f 5385496	refs/heads/master
 log size 99
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   5 hours ago
+Date:   6 hours ago
 
     Fixed decryption.
 
@@ -70,7 +86,7 @@ Date:   5 hours ago
 commit + e05dc03 de0ba9f	refs/heads/master
 log size 118
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   25 hours ago
+Date:   27 hours ago
 
     Gitignore, blowfish encrypt/decrypt
 

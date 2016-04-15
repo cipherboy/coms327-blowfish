@@ -29,7 +29,7 @@ public:
     void  encrypt(uint32_t* left, uint32_t* right);
     void  decrypt(uint32_t* left, uint32_t* right);
 
-    blowfish(char key_data[32], int key_length); // in bytes
+    blowfish(char* key_data, int key_length); // in bytes
 };
 
 #endif

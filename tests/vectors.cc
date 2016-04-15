@@ -1,5 +1,3 @@
-#include "../src/blowfish.h"
-#include <cstdlib>
 #include <iostream>
 
 extern bool schneier_ecb_test();

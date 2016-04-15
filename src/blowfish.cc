@@ -51,31 +51,31 @@ blowfish::blowfish(char* key_data, int key_length)
     }
 
     for (i = 0; i < 18; i+=2) {
-        this->encrypt_helper(&zero_left, &zero_right);
+        this-> encrypt(&zero_left, &zero_right);
         this->subkeys[i] = zero_left;
         this->subkeys[i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this->encrypt_helper(&zero_left, &zero_right);
+        this-> encrypt(&zero_left, &zero_right);
         this->sboxes[0][i] = zero_left;
         this->sboxes[0][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this->encrypt_helper(&zero_left, &zero_right);
+        this-> encrypt(&zero_left, &zero_right);
         this->sboxes[1][i] = zero_left;
         this->sboxes[1][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this->encrypt_helper(&zero_left, &zero_right);
+        this-> encrypt(&zero_left, &zero_right);
         this->sboxes[2][i] = zero_left;
         this->sboxes[2][i+1] = zero_right;
     }
 
     for (i = 0; i < 256; i+=2) {
-        this->encrypt_helper(&zero_left, &zero_right);
+        this-> encrypt(&zero_left, &zero_right);
         this->sboxes[3][i] = zero_left;
         this->sboxes[3][i+1] = zero_right;
     }
@@ -93,7 +93,7 @@ uint32_t blowfish::function_f(uint32_t data)
     return result;
 }
 
-void blowfish::encrypt_helper(uint32_t* left, uint32_t* right)
+void blowfish:: encrypt(uint32_t* left, uint32_t* right)
 {
     int i = 0;
     uint32_t tmp = *left;
@@ -130,7 +130,7 @@ void blowfish::encrypt_helper(uint32_t* left, uint32_t* right)
     *left = l;
 }
 
-void blowfish::decrypt_helper(uint32_t* left, uint32_t* right)
+void blowfish:: decrypt(uint32_t* left, uint32_t* right)
 {
     int i = 0;
     uint32_t tmp = *left;
@@ -188,7 +188,7 @@ char* blowfish::encrypt(char data[8])
     b[0] = (uint8_t) (temp >> 56u);
     left = *((uint32_t*) &b);
 
-    this->encrypt_helper(&left, &right);
+    this-> encrypt(&left, &right);
 
     result[0] = left & 0xFF000000;
     result[1] = left & 0x00FF0000;
@@ -226,7 +226,7 @@ char* blowfish::decrypt(char data[8])
     b[0] = (uint8_t) (temp >> 56u);
     left = *((uint32_t*) &b);
 
-    this->decrypt_helper(&left, &right);
+    this-> decrypt(&left, &right);
 
     result[0] = left & 0xFF000000;
     result[1] = left & 0x00FF0000;

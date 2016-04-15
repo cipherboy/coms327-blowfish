@@ -27,18 +27,12 @@ int main(int argc, char* argv[])
     plain_text[6] = 'R';
     plain_text[7] = 'E';
 
-    cout << endl << endl << endl;
-    cout << endl << endl << endl;
-    cout << endl << endl << endl;
-    cout << endl << endl << endl;
-    cout << endl << endl << endl;
-
     uint32_t zero_left = 1;
     uint32_t zero_right = 2;
-    ciph->encrypt_helper(&zero_left, &zero_right);
+    ciph-> encrypt(&zero_left, &zero_right);
     cout << "l: " << zero_left << endl << "r: " << zero_right << endl << endl << endl;
     printf("%08X %08X\n", zero_left, zero_right);
-    ciph->decrypt_helper(&zero_left, &zero_right);
+    ciph-> decrypt(&zero_left, &zero_right);
     cout << "l: " << zero_left << endl << "r: " << zero_right << endl;
 
 

@@ -26,8 +26,8 @@ private:
 public:
     char* encrypt(char* bytes);
     char* decrypt(char* data);
-    void encrypt_helper(uint32_t* left, uint32_t* right);
-    void decrypt_helper(uint32_t* left, uint32_t* right);
+    void  encrypt(uint32_t* left, uint32_t* right);
+    void  decrypt(uint32_t* left, uint32_t* right);
 
     blowfish(char key_data[32], int key_length); // in bytes
 };

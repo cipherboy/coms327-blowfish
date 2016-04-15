@@ -1,4 +1,18 @@
-commit + d13f228	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+commit + e05dc03	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 120
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   29 minutes ago
+
+    Gitignore, blowfish encrypt/decrypt
+
+ .gitignore      |  43 ++++++++++++++
+ CHANGELOG       |  21 ++++++-
+ src/blowfish.cc | 181 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ src/blowfish.h  |   8 ++-
+ src/main.cc     |   1 -
+ 5 files changed, 245 insertions(+), 9 deletions(-)
+
+commit + d13f228 e05dc03	refs/heads/master
 log size 100
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
 Date:   19 hours ago

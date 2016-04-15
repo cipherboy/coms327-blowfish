@@ -7,39 +7,47 @@
 #include "blowfish.h"
 
 #include <cstdint>
+#include <iostream>
 #include "stdio.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    char data[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    char key_data[16] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'};
+    int length = 16;
+    blowfish* ciph = new blowfish(key_data, length);
+    char* plain_text= (char*) malloc(sizeof(char) * 9);
+    plain_text[0] = 'H';
+    plain_text[1] = 'I';
+    plain_text[2] = ' ';
+    plain_text[3] = 'T';
+    plain_text[4] = 'H';
+    plain_text[5] = 'E';
+    plain_text[6] = 'R';
+    plain_text[7] = 'E';
+    plain_text[8] = '\0';
 
-    uint64_t temp = *((uint64_t *) &data);
+    uint32_t l = *((uint32_t *) &plain_text[0]);
+    uint32_t r = *((uint32_t *) &plain_text[4]);
 
-    uint8_t b[4];
-    b[3] = (uint8_t) (temp >>  0u);
-    b[2] = (uint8_t) (temp >>  8u);
-    b[1] = (uint8_t) (temp >> 16u);
-    b[0] = (uint8_t) (temp >> 24u);
-    uint32_t left = *((uint32_t*) &b);
+    cout << endl << endl << endl;
+    cout << endl << endl << endl;
+    cout << endl << endl << endl;
+    cout << endl << endl << endl;
+    cout << endl << endl << endl;
 
-    b[3] = (uint8_t) (temp >> 32u);
-    b[2] = (uint8_t) (temp >> 40u);
-    b[1] = (uint8_t) (temp >> 48u);
-    b[0] = (uint8_t) (temp >> 56u);
-    uint32_t right = *((uint32_t*) &b);
+    uint32_t zero_left = 0;
+    uint32_t zero_right = 0;
+    ciph->encrypt_helper(&zero_left, &zero_right);
+    cout << "l: " << zero_left << endl << "r: " << zero_right << endl << endl << endl;
+    ciph->decrypt_helper(&zero_left, &zero_right);
+    cout << "l: " << zero_left << endl << "r: " << zero_right << endl;
 
-    printf("%u, %u\n", left, right);
+    cout << "l: "<< l << " || r: " << r << endl;
+    ciph->encrypt_helper(&l, &r);
+    cout << "l: "<< l << " || r: " << r << endl;
+    ciph->decrypt_helper(&l, &r);
+    cout << "l: "<< l << " || r: " << r << endl;
 
-    char file[4] = {0x24, 0x3f, 0x6a, 0x88};
-    uint32_t d = *((uint32_t *) &file);
-    uint32_t e = 0;
-    e = ((d & 0xFF000000) >> 24) |
-        ((d & 0x00FF0000) >>  8) |
-        ((d & 0x0000FF00) <<  8) |
-        ((d & 0x000000FF) << 24);
-    uint32_t f = 0x243f6a88;
-
-    printf("%u, %u, %u\n", d, e, f);
 }

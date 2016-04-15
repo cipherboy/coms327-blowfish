@@ -20,8 +20,21 @@ blowfish::blowfish(char* key_data, int key_length)
     int i = 0;
     int key_loc = 0;
 
-    this->key = key_data;
-    this->key_length = key_length;
+    uint32_t keys[key_length/4];
+    uint32_t zero_left = 0;
+    uint32_t zero_right = 0;
+
+    key_loc = 0;
+    for (i = 0; i < key_length; i += 4) {
+        uint8_t a = key_data[i+0];
+        uint8_t b = key_data[i+1];
+        uint8_t c = key_data[i+2];
+        uint8_t d = key_data[i+3];
+        keys[key_loc] = (a << 24) + (b << 16) + (c << 8) + d;
+        key_loc += 1;
+    }
+    key_loc = 0;
+
     for (i = 0; i < 18; i++) {
         this->subkeys[i] = init_subkeys[i];
     }
@@ -40,60 +53,82 @@ blowfish::blowfish(char* key_data, int key_length)
 
     for (i = 0; i < 18; i++) {
         key_loc = i*4;
-        key_loc = key_loc % this->key_length;
+        key_loc = key_loc % (key_length/4);
+
+        this->subkeys[i] = this->subkeys[i] ^ keys[key_loc];
+    }
+
+    for (i = 0; i < 18; i+=2) {
+        zero_left = 0;
+        zero_right = 0;
+        this->encrypt_helper(&zero_left, &zero_right);
+        this->subkeys[i] = zero_left;
+        this->subkeys[i+1] = zero_right;
+    }
+
+    for (i = 0; i < 256; i+=2) {
+        zero_left = 0;
+        zero_right = 0;
+        this->encrypt_helper(&zero_left, &zero_right);
+        this->sboxes[0][i] = zero_left;
+        this->sboxes[0][i+1] = zero_right;
+    }
+
+    for (i = 0; i < 256; i+=2) {
+        zero_left = 0;
+        zero_right = 0;
+        this->encrypt_helper(&zero_left, &zero_right);
+        this->sboxes[1][i] = zero_left;
+        this->sboxes[1][i+1] = zero_right;
+    }
+
+    for (i = 0; i < 256; i+=2) {
+        zero_left = 0;
+        zero_right = 0;
+        this->encrypt_helper(&zero_left, &zero_right);
+        this->sboxes[2][i] = zero_left;
+        this->sboxes[2][i+1] = zero_right;
+    }
+
+    for (i = 0; i < 256; i+=2) {
+        zero_left = 0;
+        zero_right = 0;
+        this->encrypt_helper(&zero_left, &zero_right);
+        this->sboxes[3][i] = zero_left;
+        this->sboxes[3][i+1] = zero_right;
     }
 }
 
 uint32_t blowfish::function_f(uint32_t data)
 {
-    uint8_t a = data & 0xFF000000;
-    uint8_t b = data & 0x00FF0000;
-    uint8_t c = data & 0x0000FF00;
+    uint8_t a = (data & 0xFF000000) >> 24;
+    uint8_t b = (data & 0x00FF0000) >> 16;
+    uint8_t c = (data & 0x0000FF00) >> 8;
     uint8_t d = data & 0x000000FF;
 
-    return ((this->sboxes[0][a] + this->sboxes[1][b]) ^ (this->sboxes[2][c])) + this->sboxes[3][d];
+    uint32_t result = ((this->sboxes[0][a] + this->sboxes[1][b]) ^ (this->sboxes[2][c])) + this->sboxes[3][d];
+
+    return result;
 }
 
 void blowfish::encrypt_helper(uint32_t* left, uint32_t* right)
 {
+    int i = 0;
+    uint32_t* tmp = left;
     // Funrolling of loops ^.^;
     /*
         xL = xL XOR Pi
         xR = F(xL) XOR xR
         Swap xL and xR
     */
-    *left = *left ^ this->subkeys[0];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[1];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[2];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[3];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[4];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[5];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[6];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[7];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[8];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[9];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[10];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[11];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[12];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[13];
-    *left = this->function_f(*right) ^ *left;
-    *left = *left ^ this->subkeys[14];
-    *right = this->function_f(*left) ^ *right;
-    *right = *right ^ this->subkeys[15];
-    *left = this->function_f(*right) ^ *left;
+    for (i = 0; i < 16; i++) {
+        *left = (*left) ^ this->subkeys[i];
+        *right = (*right) ^ this->function_f(*left);
+
+        tmp = left;
+        left = right;
+        right = tmp;
+    }
 
     /*
         Swap xL and xR (Undo the last swap.)
@@ -101,16 +136,19 @@ void blowfish::encrypt_helper(uint32_t* left, uint32_t* right)
         xL = xL XOR P18
         Recombine xL and xR
     */
-    uint32_t* tmp = left;
+    tmp = left;
     left = right;
     right = tmp;
 
-    *right = *right ^ this->subkeys[16];
-    *left = *left ^ this->subkeys[17];
+    *right = (*right) ^ this->subkeys[16];
+    *left = (*left) ^ this->subkeys[17];
 }
 
 void blowfish::decrypt_helper(uint32_t* left, uint32_t* right)
 {
+    int i = 0;
+    uint32_t* tmp = left;
+
     /*
         Swap xL and xR (Undo the last swap.)
         xR = xR XOR P17
@@ -118,12 +156,12 @@ void blowfish::decrypt_helper(uint32_t* left, uint32_t* right)
         Recombine xL and xR
     */
 
-    *right = *right ^ this->subkeys[16];
-    *left = *left ^ this->subkeys[17];
-
-    uint32_t* tmp = left;
+    tmp = left;
     left = right;
     right = tmp;
+
+    *right = (*right) ^ this->subkeys[16];
+    *left = (*left) ^ this->subkeys[17];
 
     // Funrolling of loops ^.^;
     /*
@@ -131,38 +169,14 @@ void blowfish::decrypt_helper(uint32_t* left, uint32_t* right)
         xR = F(xL) XOR xR
         Swap xL and xR
     */
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[15];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[14];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[13];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[12];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[11];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[10];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[9];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[8];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[7];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[6];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[5];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[4];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[3];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[2];
-    *left = this->function_f(*right) ^ *left;
-    *right = *right ^ this->subkeys[1];
-    *right = this->function_f(*left) ^ *right;
-    *left = *left ^ this->subkeys[0];
+    for (i = 15; i >= 0; i--) {
+
+        *right = (*right) ^ this->function_f(*left);
+        *left = (*left) ^ this->subkeys[i];
+        tmp = left;
+        left = right;
+        right = tmp;
+    }
 }
 
 char* blowfish::encrypt(char data[8])
@@ -179,12 +193,12 @@ char* blowfish::encrypt(char data[8])
     b[2] = (uint8_t) (temp >>  8u);
     b[1] = (uint8_t) (temp >> 16u);
     b[0] = (uint8_t) (temp >> 24u);
-    left = *((uint32_t*) &b);
+    right = *((uint32_t*) &b);
     b[3] = (uint8_t) (temp >> 32u);
     b[2] = (uint8_t) (temp >> 40u);
     b[1] = (uint8_t) (temp >> 48u);
     b[0] = (uint8_t) (temp >> 56u);
-    right = *((uint32_t*) &b);
+    left = *((uint32_t*) &b);
 
     this->encrypt_helper(&left, &right);
 
@@ -209,17 +223,20 @@ char* blowfish::decrypt(char data[8])
     char* result;
 
     result = (char *) malloc(sizeof(char) * 8);
+
+    // Bytes are in reverse order of what we want. Therefore, asign right
+    // from the reversed left bytes, and left from the reversed right bytes.
     temp = *((uint64_t *) &data);
     b[3] = (uint8_t) (temp >>  0u);
     b[2] = (uint8_t) (temp >>  8u);
     b[1] = (uint8_t) (temp >> 16u);
     b[0] = (uint8_t) (temp >> 24u);
-    left = *((uint32_t*) &b);
+    right = *((uint32_t*) &b);
     b[3] = (uint8_t) (temp >> 32u);
     b[2] = (uint8_t) (temp >> 40u);
     b[1] = (uint8_t) (temp >> 48u);
     b[0] = (uint8_t) (temp >> 56u);
-    right = *((uint32_t*) &b);
+    left = *((uint32_t*) &b);
 
     this->decrypt_helper(&left, &right);
 

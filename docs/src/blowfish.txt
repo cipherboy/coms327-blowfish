@@ -1,0 +1,18 @@
+Blowfish - Cryptographic primitive
+
+Documentation:
+
+blowfish(char* key, int key_length);
+   Initialize the blowfish subkeys and s-boxes based off the given key. 
+
+char* encrypt(char* data);
+void encrypt(uint32_t* left, uint32_t* right);
+    Encrypt either 8 bytes of data or two 4-byte integer halves.
+    char* pointer must be freed after use. 
+
+char* decrypt(char* data);
+void decrypt(uint32_t* left, uint32_t* right);
+    Decrypt either 8 bytes of data or two 4-byte integer havles.
+    char* pointer must be freed after use.
+
+

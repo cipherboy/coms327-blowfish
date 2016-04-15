@@ -1,7 +1,22 @@
-commit + a8ef3f8	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
-log size 118
+commit + 1c0a4e8	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 110
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   8 minutes ago
+Date:   19 minutes ago
+
+    Automated build of tests.
+
+ CHANGELOG         |  28 +++++--
+ Makefile          |  20 +++--
+ main/main.cc      |  39 ++++++++++
+ src/main.cc       |  39 ----------
+ tests/schneier.cc | 213 ++++++++++++++++++++++++++++--------------------------
+ tests/vectors.cc  |  16 +++-
+ 6 files changed, 197 insertions(+), 158 deletions(-)
+
+commit + a8ef3f8 1c0a4e8	refs/heads/master
+log size 119
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   28 minutes ago
 
     Passing test cases: Bruce Schneier
 
@@ -17,7 +32,7 @@ Date:   8 minutes ago
 commit + 9858898 a8ef3f8	refs/heads/master
 log size 101
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   2 hours ago
+Date:   3 hours ago
 
     Fixed bin directory
 
@@ -30,7 +45,7 @@ Date:   2 hours ago
 commit + 5385496 9858898	refs/heads/master
 log size 106
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   3 hours ago
+Date:   4 hours ago
 
     Fixed key initialization
 

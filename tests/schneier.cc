@@ -128,6 +128,7 @@ bool schneier_ecb_test()
             std::cerr << "Error with test case: " << i << "::" << r << "::" << ciphertexts[i][1] << std::endl;
             return false;
         }
+
         ciph->decrypt(&l, &r);
         if (l != plaintexts[i][0]) {
             std::cerr << "Error with test case: " << i << "::" << l << "::" << plaintexts[i][0] << std::endl;
@@ -136,6 +137,8 @@ bool schneier_ecb_test()
             std::cerr << "Error with test case: " << i << "::" << r << "::" << plaintexts[i][1] << std::endl;
             return false;
         }
+
+        delete ciph;
     }
 
     std::cout << "Passed test case: ecb @ schneier.cc" << std::endl;
@@ -145,5 +148,67 @@ bool schneier_ecb_test()
 
 bool schneier_set_key_test()
 {
+    uint32_t plaintext_l = 0xFEDCBA98;
+    uint32_t plaintext_r = 0x76543210;
+    char key[24] = {(char) 0xF0, (char) 0xE1, (char) 0xD2, (char) 0xC3, (char) 0xB4, (char) 0xA5, (char) 0x96, (char) 0x87, (char) 0x78, (char) 0x69, (char) 0x5A, (char) 0x4B, (char) 0x3C, (char) 0x2D, (char) 0x1E, (char) 0x0F, (char) 0x00, (char) 0x11, (char) 0x22, (char) 0x33, (char) 0x44, (char) 0x55, (char) 0x66, (char) 0x77};
+
+    uint32_t ciphertexts[24][2] = {{0xF9AD597C, 0x49DB005E},
+        {0xE91D21C1, 0xD961A6D6},
+        {0xE9C2B70A, 0x1BC65CF3},
+        {0xBE1E6394, 0x08640F05},
+        {0xB39E4448, 0x1BDB1E6E},
+        {0x9457AA83, 0xB1928C0D},
+        {0x8BB77032, 0xF960629D},
+        {0xE87A244E, 0x2CC85E82},
+        {0x15750E7A, 0x4F4EC577},
+        {0x122BA70B, 0x3AB64AE0},
+        {0x3A833C9A, 0xFFC537F6},
+        {0x9409DA87, 0xA90F6BF2},
+        {0x884F8062, 0x5060B8B4},
+        {0x1F85031C, 0x19E11968},
+        {0x79D9373A, 0x714CA34F},
+        {0x93142887, 0xEE3BE15C},
+        {0x03429E83, 0x8CE2D14B},
+        {0xA4299E27, 0x469FF67B},
+        {0xAFD5AED1, 0xC1BC96A8},
+        {0x10851C0E, 0x3858DA9F},
+        {0xE6F51ED7, 0x9B9DB21F},
+        {0x64A6E14A, 0xFD36B46F},
+        {0x80C7D7D4, 0x5A5479AD},
+        {0x05044B62, 0xFA52D080}
+    };
+
+    int i = 1;
+
+    std::cout << "Starting test case: set_key @ schneier.cc..." << std::endl;
+
+    for (i = 0; i < 24; i++) {
+        blowfish* ciph = new blowfish(key, i+1);
+        uint32_t l = plaintext_l;
+        uint32_t r = plaintext_r;
+
+        ciph->encrypt(&l, &r);
+        if (l != ciphertexts[i][0]) {
+            std::cerr << "Error with test case: " << i << "::" << l << "::" << ciphertexts[i][0] << std::endl;
+            return false;
+        } else if (r != ciphertexts[i][1]) {
+            std::cerr << "Error with test case: " << i << "::" << r << "::" << ciphertexts[i][1] << std::endl;
+            return false;
+        }
+
+        ciph->decrypt(&l, &r);
+        if (l != plaintext_l) {
+            std::cerr << "Error with test case: " << i << "::" << l << "::" << plaintext_l << std::endl;
+            return false;
+        } else if (r != plaintext_r) {
+            std::cerr << "Error with test case: " << i << "::" << r << "::" << plaintext_r << std::endl;
+            return false;
+        }
+
+        delete ciph;
+    }
+
+    std::cout << "Passed test case: set_key @ schneier.cc" << std::endl;
+
     return true;
 }

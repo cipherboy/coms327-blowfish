@@ -1,7 +1,19 @@
-commit + de0ba9f	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
-log size 101
+commit + 5385496	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 109
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   2 minutes ago
+Date:   61 minutes ago
+
+    Fixed key initialization
+
+ CHANGELOG       |  27 ++++++++++----
+ src/blowfish.cc | 108 +++++++++++++++++++++++++-------------------------------
+ src/main.cc     |  20 ++++-------
+ 3 files changed, 74 insertions(+), 81 deletions(-)
+
+commit + de0ba9f 5385496	refs/heads/master
+log size 99
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   3 hours ago
 
     Fixed decryption.
 
@@ -14,7 +26,7 @@ Date:   2 minutes ago
 commit + e05dc03 de0ba9f	refs/heads/master
 log size 118
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   20 hours ago
+Date:   23 hours ago
 
     Gitignore, blowfish encrypt/decrypt
 

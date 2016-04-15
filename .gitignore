@@ -2,7 +2,7 @@ CHANGELOG
 config.log
 configure
 autom4te.cache/
-bin/*
+bin/blowfish
 
 valgrind.log
 

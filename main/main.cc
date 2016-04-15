@@ -5,7 +5,7 @@
 */
 
 #include "../src/blowfish.hh"
-#include "../src/blowfish_ecb.hh"
+#include "../src/blowfish_cbc.hh"
 
 #include <cstdint>
 #include <iostream>
@@ -41,9 +41,12 @@ int main(int argc, char* argv[])
     char* plain_text_2 = (char*) malloc(sizeof(char) * 40);
     strncpy(plain_text_2, "12345678 Hello World! This is a test.78", 40);
 
-    blowfish_ecb* ciph2 = new blowfish_ecb(key_data, length);
-    char* cipher_text_2 = ciph2->block_encrypt(plain_text_2, 40);
-    char* plaintext2 = ciph2->block_decrypt(cipher_text_2, 40);
+    char* iv = (char*) malloc(sizeof(char) * 9);
+    strncpy(iv, "12345678", 9);
+
+    blowfish_cbc* ciph2 = new blowfish_cbc(key_data, length);
+    char* cipher_text_2 = ciph2->block_encrypt(plain_text_2, iv, 40);
+    char* plaintext2 = ciph2->block_decrypt(cipher_text_2, iv, 40);
 
     cout << plain_text_2 << " " << plaintext2 << endl;
 

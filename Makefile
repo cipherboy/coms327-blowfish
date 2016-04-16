@@ -38,7 +38,7 @@ format:
 changelog: .git
 	git log --source --log-size --all --cherry --decorate=full --full-history \
 		--date-order --show-notes --relative-date  --abbrev-commit --children \
-		--stat --no-color > CHANGELOG
+		--stat --no-color > CHANGELOG || true
 
 build: main
 

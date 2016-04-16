@@ -23,6 +23,13 @@ blowfish::blowfish(char* key_data, int key_length)
     uint32_t zero_left = 0;
     uint32_t zero_right = 0;
 
+    uint8_t a;
+    uint8_t b;
+    uint8_t c;
+    uint8_t d;
+
+    uint32_t key_segment;
+
     // Initialize with digits of Pi
     for (i = 0; i < 18; i++) {
         this->subkeys[i] = blowfish_init_subkeys[i];
@@ -42,11 +49,11 @@ blowfish::blowfish(char* key_data, int key_length)
 
     // xor all sub-keys with key segments.
     for (i = 0; i < 18; i++) {
-        uint8_t a = key_data[(key_loc+0) % key_length];
-        uint8_t b = key_data[(key_loc+1) % key_length];
-        uint8_t c = key_data[(key_loc+2) % key_length];
-        uint8_t d = key_data[(key_loc+3) % key_length];
-        uint32_t key_segment = (a << 24) + (b << 16) + (c << 8) + d;
+        a = key_data[(key_loc+0) % key_length];
+        b = key_data[(key_loc+1) % key_length];
+        c = key_data[(key_loc+2) % key_length];
+        d = key_data[(key_loc+3) % key_length];
+        key_segment = (a << 24) + (b << 16) + (c << 8) + d;
 
         this->subkeys[i] = this->subkeys[i] ^ key_segment;
 
@@ -101,7 +108,7 @@ uint32_t blowfish::function_f(uint32_t data)
     uint8_t c = (data & 0x0000FF00) >> 8;
     uint8_t d = data & 0x000000FF;
 
-    // Feistel function
+    // Feistel function; ensure 32-bit unsigned integer
     uint32_t result = ((this->sboxes[0][a] + this->sboxes[1][b]) ^
                        (this->sboxes[2][c])) + this->sboxes[3][d];
 
@@ -204,6 +211,7 @@ char* blowfish::encrypt(char data[8])
     result[5] = (right & 0x00FF0000) >> 16;
     result[6] = (right & 0x0000FF00) >> 8;
     result[7] = right & 0x000000FF;
+
     return result;
 
 }

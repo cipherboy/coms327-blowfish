@@ -1,7 +1,32 @@
-commit + 6812290	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
-log size 108
+commit + a3a70b6	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 104
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   21 minutes ago
+Date:   18 hours ago
+
+    Started documentation
+
+ docs/src/blowfish.txt  | 18 +++++++++++
+ docs/tests/vectors.txt | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ docs/vectors.txt       | 85 --------------------------------------------------
+ 3 files changed, 103 insertions(+), 85 deletions(-)
+
+commit + 12bdbe6 a3a70b6	refs/heads/master
+log size 100
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   18 hours ago
+
+    Working CBC mode.
+
+ CHANGELOG           |  26 +++++++++----
+ main/main.cc        |  11 ++++--
+ src/blowfish_cbc.cc | 109 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/blowfish_cbc.hh |  23 +++++++++++
+ 4 files changed, 158 insertions(+), 11 deletions(-)
+
+commit + 6812290 12bdbe6	refs/heads/master
+log size 106
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   18 hours ago
 
     Finished ECB block mode
 
@@ -11,9 +36,9 @@ Date:   21 minutes ago
  3 files changed, 87 insertions(+), 49 deletions(-)
 
 commit + 7a94892 6812290	refs/heads/master
-log size 114
+log size 112
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   56 minutes ago
+Date:   19 hours ago
 
     Fixed gitignore for bin/tests
 
@@ -22,9 +47,9 @@ Date:   56 minutes ago
  2 files changed, 32 insertions(+), 11 deletions(-)
 
 commit + ff4f5ec 7a94892	refs/heads/master
-log size 131
+log size 129
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   57 minutes ago
+Date:   19 hours ago
 
     Renamed headers to .hh; started ECB block mode
 
@@ -42,9 +67,9 @@ Date:   57 minutes ago
  11 files changed, 196 insertions(+), 110 deletions(-)
 
 commit + d26619f ff4f5ec	refs/heads/master
-log size 113
+log size 114
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   2 hours ago
+Date:   20 hours ago
 
     Additional test cases: set_keys
 
@@ -58,9 +83,9 @@ Date:   2 hours ago
  7 files changed, 181 insertions(+), 56 deletions(-)
 
 commit + 1c0a4e8 d26619f	refs/heads/master
-log size 107
+log size 108
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   2 hours ago
+Date:   21 hours ago
 
     Automated build of tests.
 
@@ -73,9 +98,9 @@ Date:   2 hours ago
  6 files changed, 197 insertions(+), 158 deletions(-)
 
 commit + a8ef3f8 1c0a4e8	refs/heads/master
-log size 116
+log size 117
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   3 hours ago
+Date:   21 hours ago
 
     Passing test cases: Bruce Schneier
 
@@ -89,9 +114,9 @@ Date:   3 hours ago
  7 files changed, 219 insertions(+), 28 deletions(-)
 
 commit + 9858898 a8ef3f8	refs/heads/master
-log size 101
+log size 102
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   5 hours ago
+Date:   23 hours ago
 
     Fixed bin directory
 
@@ -102,9 +127,9 @@ Date:   5 hours ago
  4 files changed, 18 insertions(+), 6 deletions(-)
 
 commit + 5385496 9858898	refs/heads/master
-log size 106
+log size 107
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   6 hours ago
+Date:   24 hours ago
 
     Fixed key initialization
 
@@ -114,9 +139,9 @@ Date:   6 hours ago
  3 files changed, 74 insertions(+), 81 deletions(-)
 
 commit + de0ba9f 5385496	refs/heads/master
-log size 99
+log size 100
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   7 hours ago
+Date:   25 hours ago
 
     Fixed decryption.
 
@@ -127,9 +152,9 @@ Date:   7 hours ago
  4 files changed, 155 insertions(+), 120 deletions(-)
 
 commit + e05dc03 de0ba9f	refs/heads/master
-log size 118
+log size 116
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   28 hours ago
+Date:   2 days ago
 
     Gitignore, blowfish encrypt/decrypt
 
@@ -143,7 +168,7 @@ Date:   28 hours ago
 commit + d13f228 e05dc03	refs/heads/master
 log size 98
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   2 days ago
+Date:   3 days ago
 
     Project framework
 
@@ -158,7 +183,7 @@ Date:   2 days ago
 commit + 06dd368 d13f228	refs/heads/master
 log size 64
 Author: ISU-COM_S-327 <>
-Date:   2 days ago
+Date:   3 days ago
 
     initial commit
 

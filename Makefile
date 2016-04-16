@@ -34,6 +34,7 @@ format:
 	astyle --style=linux ./*/*.hh || true
 
 	rm -f ./*/*.orig
+
 changelog: .git
 	git log --source --log-size --all --cherry --decorate=full --full-history \
 		--date-order --show-notes --relative-date  --abbrev-commit --children \

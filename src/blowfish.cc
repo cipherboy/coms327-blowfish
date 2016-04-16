@@ -89,60 +89,109 @@ uint32_t blowfish::function_f(uint32_t data)
 
 void blowfish::encrypt(uint32_t* left, uint32_t* right)
 {
-    int i = 0;
-    uint32_t tmp = *left;
-
     uint32_t l = *left;
     uint32_t r = *right;
-    // Funrolling of loops ^.^;
     /*
-        xL = xL XOR Pi
-        xR = F(xL) XOR xR
-        Swap xL and xR
+        for i=0..15:
+            xL = xL XOR Pi
+            xR = F(xL) XOR xR
+            Swap xL and xR
+
+        Fully unrolled the loop.
     */
-    for (i = 0; i < 16; i+=2) {
-        l = l ^ this->subkeys[i];
-        r = r ^ this->function_f(l);
-        r = r ^ this->subkeys[i+1];
-        l = l ^ this->function_f(r);
-    }
+    l = l ^ this->subkeys[0];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[1];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[2];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[3];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[4];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[5];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[6];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[7];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[8];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[9];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[10];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[11];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[12];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[13];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[14];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[15];
+    l = l ^ this->function_f(r);
 
     /*
         Swap xL and xR (Undo the last swap.)
         xR = xR XOR P17
         xL = xL XOR P18
         Recombine xL and xR
+
+        Or don't bother swapping and swap on assignment.
     */
-    tmp = l;
-    l = r;
-    r = tmp;
+    l = l ^ this->subkeys[16];
+    r = r ^ this->subkeys[17];
 
-    r = r ^ this->subkeys[16];
-    l = l ^ this->subkeys[17];
-
-    *right = r;
-    *left = l;
+    *right = l;
+    *left = r;
 }
 
 void blowfish::decrypt(uint32_t* left, uint32_t* right)
 {
-    int i = 0;
-    uint32_t tmp = *left;
-
     uint32_t l = *left;
     uint32_t r = *right;
 
     /*
-        xL = xL XOR Pi
-        xR = F(xL) XOR xR
-        Swap xL and xR
+        for i = 17..2:
+            xL = xL XOR Pi
+            xR = F(xL) XOR xR
+            Swap xL and xR
+
+        Fully unrolled the loop.
     */
-    for (i = 16; i >= 2; i-=2) {
-        l = l ^ this->subkeys[i+1];
-        r = r ^ this->function_f(l);
-        r = r ^ this->subkeys[i];
-        l = l ^ this->function_f(r);
-    }
+    l = l ^ this->subkeys[17];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[16];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[15];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[14];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[13];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[12];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[11];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[10];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[9];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[8];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[7];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[6];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[5];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[4];
+    l = l ^ this->function_f(r);
+    l = l ^ this->subkeys[3];
+    r = r ^ this->function_f(l);
+    r = r ^ this->subkeys[2];
+    l = l ^ this->function_f(r);
 
     /*
         Swap xL and xR (Undo the last swap.)
@@ -150,15 +199,11 @@ void blowfish::decrypt(uint32_t* left, uint32_t* right)
         xL = xL XOR P18
         Recombine xL and xR
     */
-    tmp = l;
-    l = r;
-    r = tmp;
+    l = l ^ this->subkeys[1];
+    r = r ^ this->subkeys[0];
 
-    r = r ^ this->subkeys[1];
-    l = l ^ this->subkeys[0];
-
-    *right = r;
-    *left = l;
+    *right = l;
+    *left = r;
 }
 
 char* blowfish::encrypt(char data[8])

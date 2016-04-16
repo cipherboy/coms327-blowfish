@@ -3,16 +3,59 @@ Blowfish - Cryptographic primitive
 Documentation:
 
 blowfish(char* key, int key_length);
-   Initialize the blowfish subkeys and s-boxes based off the given key. 
+    Initialize the blowfish sub-keys and s-boxes based off the given key.
+
+    Initialization is as follows:
+        The sub-keys and s-boxes are arrays of 32-bit unsigned integers; there
+        are 18 sub-keys and 4, 256-entry s-boxes. Initialize these, in order
+        (0...17 sub-keys then 0:0...255 s-box, 1:0...255 s-box... etc) with the
+        digits of pi in hexadecimal after the leading 3. That is, sub-key zero
+        is assigned 0x243f6a88, sub-key one is assigned 0x85a308d3, etc. The
+        last value assigned (to s-box 3 at position 255) is 0x3ac372e6.
+
+        Next, all sub-keys are xor-ed with parts of the given key. Suppose that
+        key_length is seven. Then sub-key zero would be xor-ed with key[0..3],
+        sub-key one would be xor-ed with key[4..6, 0], sub-key two would be
+        xor-ed with key[1..4], etc.
+
+        Then, encrypt the all null string (left: 0, right: 0) with the current
+        configuration. Take the left half and store it as sub-key zero, the
+        right half as sub-key one. Encrypt the result again (left: sub-key zero,
+        right: sub-key one) and store it as sub-key two and sub-key three
+        respectively. Repeat for all sub-key and s-box locations, always
+        re-encrypting the previous result.
+
 
 char* encrypt(char* data);
 void encrypt(uint32_t* left, uint32_t* right);
     Encrypt either 8 bytes of data or two 4-byte integer halves.
-    char* pointer must be freed after use. 
+    char* result must be freed after use, uint32_t* need not be.
+
+    Encryption is as follows:
+        With sub-keys i=0...15:
+            left = left xor subkey[i]
+            right = right xor f(left)
+            swap left, right
+
+        swap left, right
+        right = right xor subkey[16]
+        left = left xor subkey[17]
+
+    Note: the above loop is fully unrolled in the implementation code.
 
 char* decrypt(char* data);
 void decrypt(uint32_t* left, uint32_t* right);
     Decrypt either 8 bytes of data or two 4-byte integer havles.
     char* pointer must be freed after use.
 
+    Decryption is as follows:
+        With sub-keys i=17...2:
+            left = left xor subkey[i]
+            right = right xor f(left)
+            swap left, right
 
+        swap left, right
+        right = right xor subkey[1]
+        left = left xor subkey[0]
+
+    Note: the above loop is fully unrolled in the implementation code.

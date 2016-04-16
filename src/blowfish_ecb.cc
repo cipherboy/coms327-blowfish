@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2016 Alexander Scheel
  *
- * Implement for blowfish cryptographic primitive
+ * Implementation for blowfish in ECB block mode
 */
 
 #include "blowfish.hh"
 #include "blowfish_ecb.hh"
 
-#include <stdio.h>
 #include <cstdlib>
 
-blowfish_ecb::blowfish_ecb(char* key_data, int key_length) : blowfish(key_data, key_length)
+blowfish_ecb::blowfish_ecb(char* key_data,
+                           int key_length) : blowfish(key_data, key_length)
 {
 }
 
@@ -29,8 +29,10 @@ char* blowfish_ecb::block_encrypt(char* data, int data_length)
     result = (char *) malloc(sizeof(char) * data_length);
 
     for (i = 0; i < data_length; i+=8) {
-        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
-        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
+        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((
+                    uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
+        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((
+                    uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
 
         this->encrypt(&left, &right);
 
@@ -62,8 +64,10 @@ char* blowfish_ecb::block_decrypt(char* data, int data_length)
     result = (char *) malloc(sizeof(char) * data_length);
 
     for (i = 0; i < data_length; i+=8) {
-        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
-        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
+        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((
+                    uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
+        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((
+                    uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
 
         this->decrypt(&left, &right);
 

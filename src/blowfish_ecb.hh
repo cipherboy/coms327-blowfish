@@ -8,7 +8,6 @@
 #ifndef BLOWFISH_ECB_H
 #define BLOWFISH_ECB_H
 
-#include <cstdint>
 #include "blowfish.hh"
 
 class blowfish_ecb : blowfish

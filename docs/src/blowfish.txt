@@ -45,7 +45,7 @@ void encrypt(uint32_t* left, uint32_t* right);
 
 char* decrypt(char* data);
 void decrypt(uint32_t* left, uint32_t* right);
-    Decrypt either 8 bytes of data or two 4-byte integer havles.
+    Decrypt either 8 bytes of data or two 4-byte integer halves.
     char* pointer must be freed after use.
 
     Decryption is as follows:
@@ -61,7 +61,7 @@ void decrypt(uint32_t* left, uint32_t* right);
     Note: the above loop is fully unrolled in the implementation code.
 
 uint32_t function_f(uint32_t data);
-    Private function. Implements the function f(left) from the blowfish
+    Private function. Implements the Feistel function from the blowfish
     specification; this is where the s-boxes are used.
 
     Function f is defined as follows:

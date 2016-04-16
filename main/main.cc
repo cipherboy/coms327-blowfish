@@ -25,7 +25,8 @@ int main(int argc, char* argv[])
     uint32_t zero_left = 1;
     uint32_t zero_right = 2;
     ciph->encrypt(&zero_left, &zero_right);
-    cout << "l: " << zero_left << endl << "r: " << zero_right << endl << endl << endl;
+    cout << "l: " << zero_left << endl << "r: " << zero_right << endl << endl <<
+         endl;
     printf("%08X %08X\n", zero_left, zero_right);
     ciph->decrypt(&zero_left, &zero_right);
     cout << "l: " << zero_left << endl << "r: " << zero_right << endl;

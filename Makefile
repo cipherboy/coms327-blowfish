@@ -6,7 +6,7 @@
 # clean: 			removes old object files
 # changelog: 		updates changelog
 # run:				makes all, executes code
-# execute:			runs current executable
+# execute:			runs all test vectors
 
 VERSION = Scheel_Alexander.assignment-2
 NAME = blowfish
@@ -30,8 +30,8 @@ clean:
 	rm -rf ./*/*.o ./bin/*.dSYM ./autom4te.cache ./configure ./bin/tests ./bin/$(NAME)
 
 format:
-	astyle --style=linux ./*/*.cc || true
-	astyle --style=linux ./*/*.hh || true
+	astyle --style=linux --lineend=linux --max-code-length=78 ./*/*.cc || true
+	astyle --style=linux --lineend=linux --max-code-length=78 ./*/*.hh || true
 
 	rm -f ./*/*.orig
 

@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2016 Alexander Scheel
  *
- * Implement for blowfish cryptographic primitive
+ * Implementation for blowfish in CBC block mode
 */
 
 #include "blowfish.hh"
 #include "blowfish_cbc.hh"
 
-#include <stdio.h>
 #include <cstdlib>
 
-blowfish_cbc::blowfish_cbc(char* key_data, int key_length) : blowfish(key_data, key_length)
+blowfish_cbc::blowfish_cbc(char* key_data,
+                           int key_length) : blowfish(key_data, key_length)
 {
 }
 
@@ -30,12 +30,16 @@ char* blowfish_cbc::block_encrypt(char* data, char* iv, int data_length)
 
     result = (char *) malloc(sizeof(char) * data_length);
 
-    last_left = ((uint8_t) iv[0] << 24) + ((uint8_t) iv[1] << 16) + ((uint8_t) iv[2] << 8) + (uint8_t) iv[3];
-    last_right = ((uint8_t) iv[4] << 24) + ((uint8_t) iv[5] << 16) + ((uint8_t) iv[6] << 8) + (uint8_t) iv[7];
+    last_left = ((uint8_t) iv[0] << 24) + ((uint8_t) iv[1] << 16) + ((
+                    uint8_t) iv[2] << 8) + (uint8_t) iv[3];
+    last_right = ((uint8_t) iv[4] << 24) + ((uint8_t) iv[5] << 16) + ((
+                     uint8_t) iv[6] << 8) + (uint8_t) iv[7];
 
     for (i = 0; i < data_length; i+=8) {
-        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
-        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
+        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((
+                    uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
+        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((
+                    uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
 
         left = left ^ last_left;
         right = right ^ last_right;
@@ -77,12 +81,16 @@ char* blowfish_cbc::block_decrypt(char* data, char* iv, int data_length)
 
     result = (char *) malloc(sizeof(char) * data_length);
 
-    last_left = ((uint8_t) iv[0] << 24) + ((uint8_t) iv[1] << 16) + ((uint8_t) iv[2] << 8) + (uint8_t) iv[3];
-    last_right = ((uint8_t) iv[4] << 24) + ((uint8_t) iv[5] << 16) + ((uint8_t) iv[6] << 8) + (uint8_t) iv[7];
+    last_left = ((uint8_t) iv[0] << 24) + ((uint8_t) iv[1] << 16) + ((
+                    uint8_t) iv[2] << 8) + (uint8_t) iv[3];
+    last_right = ((uint8_t) iv[4] << 24) + ((uint8_t) iv[5] << 16) + ((
+                     uint8_t) iv[6] << 8) + (uint8_t) iv[7];
 
     for (i = 0; i < data_length; i+=8) {
-        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
-        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
+        left = ((uint8_t) data[i+0] << 24) + ((uint8_t) data[i+1] << 16) + ((
+                    uint8_t) data[i+2] << 8) + (uint8_t) data[i+3];
+        right = ((uint8_t) data[i+4] << 24) + ((uint8_t) data[i+5] << 16) + ((
+                    uint8_t) data[i+6] << 8) + (uint8_t) data[i+7];
 
         save_left = left;
         save_right = right;

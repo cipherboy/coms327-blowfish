@@ -122,19 +122,23 @@ bool schneier_ecb_test()
         uint32_t r = plaintexts[i][1];
         ciph->encrypt(&l, &r);
         if (l != ciphertexts[i][0]) {
-            std::cerr << "Error with test case: " << i << "::" << l << "::" << ciphertexts[i][0] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << l << "::" <<
+                      ciphertexts[i][0] << std::endl;
             return false;
         } else if (r != ciphertexts[i][1]) {
-            std::cerr << "Error with test case: " << i << "::" << r << "::" << ciphertexts[i][1] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << r << "::" <<
+                      ciphertexts[i][1] << std::endl;
             return false;
         }
 
         ciph->decrypt(&l, &r);
         if (l != plaintexts[i][0]) {
-            std::cerr << "Error with test case: " << i << "::" << l << "::" << plaintexts[i][0] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << l << "::" <<
+                      plaintexts[i][0] << std::endl;
             return false;
         } else if (r != plaintexts[i][1]) {
-            std::cerr << "Error with test case: " << i << "::" << r << "::" << plaintexts[i][1] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << r << "::" <<
+                      plaintexts[i][1] << std::endl;
             return false;
         }
 
@@ -189,19 +193,23 @@ bool schneier_set_key_test()
 
         ciph->encrypt(&l, &r);
         if (l != ciphertexts[i][0]) {
-            std::cerr << "Error with test case: " << i << "::" << l << "::" << ciphertexts[i][0] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << l << "::" <<
+                      ciphertexts[i][0] << std::endl;
             return false;
         } else if (r != ciphertexts[i][1]) {
-            std::cerr << "Error with test case: " << i << "::" << r << "::" << ciphertexts[i][1] << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << r << "::" <<
+                      ciphertexts[i][1] << std::endl;
             return false;
         }
 
         ciph->decrypt(&l, &r);
         if (l != plaintext_l) {
-            std::cerr << "Error with test case: " << i << "::" << l << "::" << plaintext_l << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << l << "::" << plaintext_l
+                      << std::endl;
             return false;
         } else if (r != plaintext_r) {
-            std::cerr << "Error with test case: " << i << "::" << r << "::" << plaintext_r << std::endl;
+            std::cerr << "Error with test case: " << i << "::" << r << "::" << plaintext_r
+                      << std::endl;
             return false;
         }
 

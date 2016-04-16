@@ -1,7 +1,30 @@
-commit + a3a70b6	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+commit + f449c24	refs/heads/master (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+log size 115
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   6 minutes ago
+
+    Added description of function_f
+
+ docs/src/blowfish.txt | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+commit + 7560d9c f449c24	refs/heads/master
+log size 132
+Author: Alexander Scheel <alexander.m.scheel@gmail.com>
+Date:   3 hours ago
+
+    Unrolled loop; documentation on blowfish algorithm
+
+ CHANGELOG             |  71 +++++++++++++++++++---------
+ Makefile              |   1 +
+ docs/src/blowfish.txt |  47 ++++++++++++++++++-
+ src/blowfish.cc       | 127 ++++++++++++++++++++++++++++++++++----------------
+ 4 files changed, 180 insertions(+), 66 deletions(-)
+
+commit + a3a70b6 7560d9c	refs/heads/master
 log size 104
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   18 hours ago
+Date:   21 hours ago
 
     Started documentation
 
@@ -13,7 +36,7 @@ Date:   18 hours ago
 commit + 12bdbe6 a3a70b6	refs/heads/master
 log size 100
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   18 hours ago
+Date:   22 hours ago
 
     Working CBC mode.
 
@@ -26,7 +49,7 @@ Date:   18 hours ago
 commit + 6812290 12bdbe6	refs/heads/master
 log size 106
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   18 hours ago
+Date:   22 hours ago
 
     Finished ECB block mode
 
@@ -38,7 +61,7 @@ Date:   18 hours ago
 commit + 7a94892 6812290	refs/heads/master
 log size 112
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   19 hours ago
+Date:   23 hours ago
 
     Fixed gitignore for bin/tests
 
@@ -49,7 +72,7 @@ Date:   19 hours ago
 commit + ff4f5ec 7a94892	refs/heads/master
 log size 129
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   19 hours ago
+Date:   23 hours ago
 
     Renamed headers to .hh; started ECB block mode
 
@@ -69,7 +92,7 @@ Date:   19 hours ago
 commit + d26619f ff4f5ec	refs/heads/master
 log size 114
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   20 hours ago
+Date:   24 hours ago
 
     Additional test cases: set_keys
 
@@ -85,7 +108,7 @@ Date:   20 hours ago
 commit + 1c0a4e8 d26619f	refs/heads/master
 log size 108
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   21 hours ago
+Date:   24 hours ago
 
     Automated build of tests.
 
@@ -100,7 +123,7 @@ Date:   21 hours ago
 commit + a8ef3f8 1c0a4e8	refs/heads/master
 log size 117
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   21 hours ago
+Date:   24 hours ago
 
     Passing test cases: Bruce Schneier
 
@@ -116,7 +139,7 @@ Date:   21 hours ago
 commit + 9858898 a8ef3f8	refs/heads/master
 log size 102
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   23 hours ago
+Date:   26 hours ago
 
     Fixed bin directory
 
@@ -129,7 +152,7 @@ Date:   23 hours ago
 commit + 5385496 9858898	refs/heads/master
 log size 107
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   24 hours ago
+Date:   27 hours ago
 
     Fixed key initialization
 
@@ -141,7 +164,7 @@ Date:   24 hours ago
 commit + de0ba9f 5385496	refs/heads/master
 log size 100
 Author: Alexander Scheel <alexander.m.scheel@gmail.com>
-Date:   25 hours ago
+Date:   29 hours ago
 
     Fixed decryption.
 

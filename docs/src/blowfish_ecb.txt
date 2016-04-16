@@ -1,0 +1,29 @@
+Blowfish - Electronic Codebook (ECB) Block Cipher
+
+Documentation:
+
+blowfish_ecb(char* key_data, int key_length);
+    Initialize the blowfish sub-keys and s-boxes based off the given key; same
+    as blowfish(); constructor.
+
+char* block_encrypt(char* data, int data_length);
+    Input length required to be a multiple of 8 (block size), otherwise
+    NULL is returned as output. Returned char* pointer must freed.
+
+    Encryption:
+        for each 8-byte block to length of input:
+            encrypt(block)
+            append block to result
+
+        return result
+
+char* block_decrypt(char* data, int data_length);
+    Input length required to be a multiple of 8 (block size), otherwise
+    NULL is returned as output. Returned char* pointer must freed.
+
+    Decryption:
+        for each 8-byte block to length of input:
+            decrypt(block)
+            append block to result
+
+        return result

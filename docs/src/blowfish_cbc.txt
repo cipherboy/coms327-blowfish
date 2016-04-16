@@ -1,0 +1,38 @@
+Blowfish - Cipher Block Chaining (CBC) Block Cipher
+
+Documentation:
+
+blowfish_cbc(char* key_data, int key_length);
+    Initialize the blowfish sub-keys and s-boxes based off the given key; same
+    as blowfish(); constructor.
+
+char* block_encrypt(char* data, char* iv, int data_length);
+    Input length required to be a multiple of 8 (block size), otherwise
+    NULL is returned as output. Returned char* pointer must freed.
+
+    Encryption:
+        set last_block to IV
+
+        for each 8-byte block to length of input:
+            current = block xor last_block
+            blowfish->encrypt(current)
+            last_block = current
+            append current to result
+
+        return result
+
+char* block_decrypt(char* data, char* iv, int data_length);
+    Input length required to be a multiple of 8 (block size), otherwise
+    NULL is returned as output. Returned char* pointer must freed.
+
+    Decryption:
+        set last_block to IV
+
+        for each 8-byte block to length of input:
+            saved_block = block
+            blowfish->decrypt(block)
+            block = block xor last_block
+            last_block = saved_block
+            append block to result
+
+        return result

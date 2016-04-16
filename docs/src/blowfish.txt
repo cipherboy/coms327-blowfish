@@ -59,3 +59,18 @@ void decrypt(uint32_t* left, uint32_t* right);
         left = left xor subkey[0]
 
     Note: the above loop is fully unrolled in the implementation code.
+
+uint32_t function_f(uint32_t data);
+    Private function. Implements the function f(left) from the blowfish
+    specification; this is where the s-boxes are used.
+
+    Function f is defined as follows:
+        With bytes b[0]..b[3] of 32-bit input:
+            add s-box zero at index b[0] to s-box one at index b[1]
+            xor the result with s-box two at index b[2]
+            add the result to s-box three at index b[3]
+        return the result
+
+    Note: addition is defined on unsigned 32-bit integers; therefore its the
+    same as addition over GF(2^32) (mod 2^32). This follows since the s-boxes
+    store 32-bit integers.

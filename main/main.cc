@@ -15,9 +15,16 @@
 
 using namespace std;
 
+// Random strings; never leaked to the attack methods.
 string ecb_decryption_attack_magic_key = "gCJIT5voUktvtFqFlNq8V5bUShmrid";
 string ecb_cut_and_paste_attack_magic_key = "VoXzMNXhxLD4NPJn2QjG9HT9iN2Ur8";
 
+/**
+ * Helper, black-box encryption method for the first attack
+ *
+ * Appends some unknown string to whatever data the caller passes,
+ * pads, encrypts with some fixed key, and returns the result.
+**/
 string ecb_decryption_attack_encrypt_helper(string str)
 {
     blowfish_ecb ciph(ecb_decryption_attack_magic_key);
@@ -33,6 +40,21 @@ string ecb_decryption_attack_encrypt_helper(string str)
     return ciph.block_encrypt(text);
 }
 
+/**
+ * Main decryption attack against ECB mode.
+ *
+ * This type of attack works against any constant-string (prepend/append)
+ * encryption function. Hopefully not used in production anywhere...
+ *
+ * The attack works as follows: for each block, align it so the unknown
+ * character aligns to the 8th byte of a known string of 7 characters.
+ * At the beginning, this is a known prefix (AAAAAAA). The first unknown
+ * character thus fills the 8th character of the block, and then a simple
+ * brute force of possible characters (i.e., 256 upper bound) can be
+ * conducted to find the block which matches the original block (all
+ * matching blocks are the same in ECB mode). This can then be repeated
+ * for all possible blocks.
+**/
 void ecb_decryption_attack()
 {
     int target_length = ecb_decryption_attack_encrypt_helper("1").length();
@@ -69,6 +91,14 @@ void ecb_decryption_attack()
     cout << known << endl;
 }
 
+/**
+ * Helper function for ECB Cut and Paste attack.
+ *
+ * Checks to make sure email does not contain any equals signs
+ * or ampersands, and then creates a fake, URL-esque
+ * profile for the user, encrypted using ECB. (e.g., encrypted cookies)
+ * and returns the result.
+**/
 string ecb_cut_and_paste_attack_profile_for(string email)
 {
     blowfish_ecb ciph(ecb_decryption_attack_magic_key);
@@ -94,6 +124,11 @@ string ecb_cut_and_paste_attack_profile_for(string email)
     return ciph.block_encrypt(text);
 }
 
+/**
+ * Helper function for ECB Cut and Paste attack.
+ *
+ * Validates whether or not a profile is admin, after decrypting.
+**/
 bool ecb_cut_and_paste_attack_is_admin(string profile)
 {
     blowfish_ecb ciph(ecb_decryption_attack_magic_key);
@@ -106,6 +141,12 @@ bool ecb_cut_and_paste_attack_is_admin(string profile)
     return false;
 }
 
+/**
+ * Helper function for ECB Cut and Paste attack.
+ *
+ * Finds whether or not a given ciphertext has duplicate blocks: location of last
+ * block if found, else -1.
+**/
 int ecb_cut_and_paste_attack_has_duplicate_block(string ciphertext)
 {
     for (unsigned int i = 0; i < (ciphertext.length()-1)/8; i++) {
@@ -119,6 +160,18 @@ int ecb_cut_and_paste_attack_has_duplicate_block(string ciphertext)
     return -1;
 }
 
+
+/**
+ * Implements the actual ECB Cut and paste attack.
+ *
+ * More machinery here than strictly necessary. Detects the size of the prefix,
+ * the size of the entire content, the offset necessary for creating the admin
+ * block... etc.
+ *
+ * All this work just to align role=user (specifically the user part) on a new
+ * block, allowing us to align admin over the top, to make it decrypt to
+ * user=admin
+**/
 void ecb_cut_and_paste_attack()
 {
     // Detect length of content.
@@ -172,6 +225,9 @@ void ecb_cut_and_paste_attack()
     cout << "Is admin? " << ecb_cut_and_paste_attack_is_admin(profile) << endl;
 }
 
+/**
+ * Run the two attacks
+**/
 int main(int argc, char* argv[])
 {
     cout << "Beginning ECB Decryption Attack..." << endl;

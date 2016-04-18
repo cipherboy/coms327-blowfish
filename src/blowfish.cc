@@ -8,6 +8,8 @@
 #include "blowfish_constants.hh"
 
 #include <cstdlib>
+#include <string>
+#include <iostream>
 
 
 /**
@@ -15,7 +17,17 @@
  *
  * See /docs/src/blowfish.txt for more details.
 **/
-blowfish::blowfish(char* key_data, int key_length)
+blowfish::blowfish(std::string key) : blowfish(key.c_str(), key.length())
+{
+}
+
+
+/**
+ * Initialize the blowfish sub-keys and s-boxes based off the given key.
+ *
+ * See /docs/src/blowfish.txt for more details.
+**/
+blowfish::blowfish(const char* key_data, int key_length)
 {
     int i = 0;
     int key_loc = 0;
@@ -188,7 +200,7 @@ void blowfish::encrypt(uint32_t* left, uint32_t* right)
  *
  * See /docs/src/blowfish.txt for more details.
 **/
-char* blowfish::encrypt(char data[8])
+char* blowfish::encrypt(const char* data)
 {
     uint32_t left;
     uint32_t right;
@@ -214,6 +226,21 @@ char* blowfish::encrypt(char data[8])
 
     return result;
 
+}
+
+std::string blowfish::encrypt_str(std::string data)
+{
+    if (data.length() != 8) {
+        return "";
+    }
+
+    char* result = this->encrypt(data.c_str());
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, 8);
+    free(result);
+
+    return str_result;
 }
 
 
@@ -289,7 +316,7 @@ void blowfish::decrypt(uint32_t* left, uint32_t* right)
  *
  * See /docs/src/blowfish.txt for more details.
 **/
-char* blowfish::decrypt(char data[8])
+char* blowfish::decrypt(const char* data)
 {
     uint32_t left;
     uint32_t right;
@@ -314,4 +341,19 @@ char* blowfish::decrypt(char data[8])
     result[7] = right & 0x000000FF;
 
     return result;
+}
+
+std::string blowfish::decrypt_str(std::string data)
+{
+    if (data.length() != 8) {
+        return "";
+    }
+
+    char* result = this->decrypt(data.c_str());
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, 8);
+    free(result);
+
+    return str_result;
 }

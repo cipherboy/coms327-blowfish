@@ -8,6 +8,8 @@
 #include "blowfish_cbc.hh"
 
 #include <cstdlib>
+#include <cstring>
+#include <string>
 
 
 /**
@@ -16,7 +18,19 @@
  *
  * See /docs/src/blowfish_cbc.txt for more details.
 **/
-blowfish_cbc::blowfish_cbc(char* key_data,
+blowfish_cbc::blowfish_cbc(std::string key) : blowfish_cbc(key.c_str(),
+            key.length())
+{
+}
+
+
+/**
+ * Initialize the blowfish sub-keys and s-boxes based off the given key; same
+ * as blowfish(); constructor.
+ *
+ * See /docs/src/blowfish_cbc.txt for more details.
+**/
+blowfish_cbc::blowfish_cbc(const char* key_data,
                            int key_length) : blowfish(key_data, key_length)
 {
     // Do nothing but call parent constructor.
@@ -29,7 +43,8 @@ blowfish_cbc::blowfish_cbc(char* key_data,
  *
  * See /docs/src/blowfish_cbc.txt for more details.
 **/
-char* blowfish_cbc::block_encrypt(char* data, char* iv, int data_length)
+char* blowfish_cbc::block_encrypt(const char* data, const char* iv,
+                                  int data_length)
 {
     int i = 0;
 
@@ -90,6 +105,21 @@ char* blowfish_cbc::block_encrypt(char* data, char* iv, int data_length)
 
 }
 
+std::string blowfish_cbc::block_encrypt(std::string data, std::string iv)
+{
+    char* result = this->block_encrypt(data.c_str(), iv.c_str(), data.length());
+
+    if (result == NULL) {
+        return "";
+    }
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, data.length());
+    free(result);
+
+    return str_result;
+}
+
 
 /**
  * Input length required to be a multiple of 8 (block size), otherwise
@@ -97,7 +127,8 @@ char* blowfish_cbc::block_encrypt(char* data, char* iv, int data_length)
  *
  * See /docs/src/blowfish_cbc.txt for more details.
 **/
-char* blowfish_cbc::block_decrypt(char* data, char* iv, int data_length)
+char* blowfish_cbc::block_decrypt(const char* data, const char* iv,
+                                  int data_length)
 {
     int i = 0;
 
@@ -162,4 +193,19 @@ char* blowfish_cbc::block_decrypt(char* data, char* iv, int data_length)
     }
 
     return result;
+}
+
+std::string blowfish_cbc::block_decrypt(std::string data, std::string iv)
+{
+    char* result = this->block_decrypt(data.c_str(), iv.c_str(), data.length());
+
+    if (result == NULL) {
+        return "";
+    }
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, data.length());
+    free(result);
+
+    return str_result;
 }

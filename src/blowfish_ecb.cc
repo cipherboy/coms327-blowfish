@@ -8,6 +8,20 @@
 #include "blowfish_ecb.hh"
 
 #include <cstdlib>
+#include <cstring>
+#include <string>
+
+
+/**
+ * Initialize the blowfish sub-keys and s-boxes based off the given key; same
+ * as blowfish(); constructor.
+ *
+ * See /docs/src/blowfish_cbc.txt for more details.
+**/
+blowfish_ecb::blowfish_ecb(std::string key) : blowfish_ecb(key.c_str(),
+            key.length())
+{
+}
 
 
 /**
@@ -16,7 +30,7 @@
  *
  * See /docs/src/blowfish_ecb.txt for more details.
 **/
-blowfish_ecb::blowfish_ecb(char* key_data,
+blowfish_ecb::blowfish_ecb(const char* key_data,
                            int key_length) : blowfish(key_data, key_length)
 {
     // Do nothing but call parent constructor.
@@ -29,7 +43,7 @@ blowfish_ecb::blowfish_ecb(char* key_data,
  *
  * See /docs/src/blowfish_ecb.txt for more details.
 **/
-char* blowfish_ecb::block_encrypt(char* data, int data_length)
+char* blowfish_ecb::block_encrypt(const char* data, int data_length)
 {
     uint32_t left;
     uint32_t right;
@@ -69,13 +83,29 @@ char* blowfish_ecb::block_encrypt(char* data, int data_length)
 }
 
 
+
+std::string blowfish_ecb::block_encrypt(std::string data)
+{
+    char* result = this->block_encrypt(data.c_str(), data.length());
+
+    if (result == NULL) {
+        return "";
+    }
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, data.length());
+    free(result);
+
+    return str_result;
+}
+
 /**
  * Input length required to be a multiple of 8 (block size), otherwise
  * NULL is returned as output. Returned char* pointer must freed.
  *
  * See /docs/src/blowfish_ecb.txt for more details.
 **/
-char* blowfish_ecb::block_decrypt(char* data, int data_length)
+char* blowfish_ecb::block_decrypt(const char* data, int data_length)
 {
     uint32_t left;
     uint32_t right;
@@ -113,4 +143,19 @@ char* blowfish_ecb::block_decrypt(char* data, int data_length)
     }
 
     return result;
+}
+
+std::string blowfish_ecb::block_decrypt(std::string data)
+{
+    char* result = this->block_decrypt(data.c_str(), data.length());
+
+    if (result == NULL) {
+        return "";
+    }
+
+    // Construct a string with length equal to the original data's length
+    std::string str_result(result, data.length());
+    free(result);
+
+    return str_result;
 }

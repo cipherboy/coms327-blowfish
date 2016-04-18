@@ -13,10 +13,14 @@
 class blowfish_ecb : blowfish
 {
 public:
-    char* block_encrypt(char* data, int data_length);
-    char* block_decrypt(char* data, int data_length);
+    char* block_encrypt(const char* data, int data_length);
+    char* block_decrypt(const char* data, int data_length);
 
-    blowfish_ecb(char* key_data, int key_length);
+    std::string block_encrypt(std::string data);
+    std::string block_decrypt(std::string data);
+
+    blowfish_ecb(const char* key_data, int key_length);
+    blowfish_ecb(std::string key);
 };
 
 #endif

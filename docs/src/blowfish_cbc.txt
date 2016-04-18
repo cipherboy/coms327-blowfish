@@ -2,11 +2,11 @@ Blowfish - Cipher Block Chaining (CBC) Block Cipher
 
 Documentation:
 
-blowfish_cbc(char* key_data, int key_length);
+blowfish_cbc(const char* key_data, int key_length);
     Initialize the blowfish sub-keys and s-boxes based off the given key; same
     as blowfish(); constructor.
 
-char* block_encrypt(char* data, char* iv, int data_length);
+char* block_encrypt(const char* data, char* iv, int data_length);
     Input length required to be a multiple of 8 (block size), otherwise
     NULL is returned as output. Returned char* pointer must freed.
 
@@ -21,7 +21,7 @@ char* block_encrypt(char* data, char* iv, int data_length);
 
         return result
 
-char* block_decrypt(char* data, char* iv, int data_length);
+char* block_decrypt(const char* data, char* iv, int data_length);
     Input length required to be a multiple of 8 (block size), otherwise
     NULL is returned as output. Returned char* pointer must freed.
 

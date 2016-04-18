@@ -9,14 +9,18 @@
 #define BLOWFISH_CBC_H
 
 #include "blowfish.hh"
+#include <string>
 
 class blowfish_cbc : blowfish
 {
 public:
-    char* block_encrypt(char* data, char* iv, int data_length);
-    char* block_decrypt(char* data, char* iv, int data_length);
+    char* block_encrypt(const char* data, const char* iv, int data_length);
+    char* block_decrypt(const char* data, const char* iv, int data_length);
+    std::string block_encrypt(std::string data, std::string iv);
+    std::string block_decrypt(std::string data, std::string iv);
 
-    blowfish_cbc(char* key_data, int key_length);
+    blowfish_cbc(const char* key_data, int key_length);
+    blowfish_cbc(std::string key);
 };
 
 #endif

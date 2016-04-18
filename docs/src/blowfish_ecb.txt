@@ -2,13 +2,19 @@ Blowfish - Electronic Codebook (ECB) Block Cipher
 
 Documentation:
 
+blowfish_ecb(std::string key_data);
 blowfish_ecb(const char* key_data, int key_length);
     Initialize the blowfish sub-keys and s-boxes based off the given key; same
     as blowfish(); constructor.
 
+
+std::string block_encrypt(std::string data);
 char* block_encrypt(const char* data, int data_length);
     Input length required to be a multiple of 8 (block size), otherwise
     NULL is returned as output. Returned char* pointer must freed.
+
+    Note: std::string result does not need to be freed. May return an empty
+    string if data is not of a length that is a multiple of 8.
 
     Encryption:
         for each 8-byte block to length of input:
@@ -17,9 +23,14 @@ char* block_encrypt(const char* data, int data_length);
 
         return result
 
+
+std::string block_decrypt(std::string data);
 char* block_decrypt(const char* data, int data_length);
     Input length required to be a multiple of 8 (block size), otherwise
     NULL is returned as output. Returned char* pointer must freed.
+
+    Note: std::string result does not need to be freed. May return an empty
+    string if data is not of a length that is a multiple of 8.
 
     Decryption:
         for each 8-byte block to length of input:

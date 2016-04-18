@@ -2,6 +2,7 @@ Blowfish - Cryptographic primitive
 
 Documentation:
 
+blowfish(std::string);
 blowfish(char* key, int key_length);
     Initialize the blowfish sub-keys and s-boxes based off the given key.
 
@@ -26,11 +27,15 @@ blowfish(char* key, int key_length);
         re-encrypting the previous result.
 
 
+std::string encrypt_str(std::string data);
 char* encrypt(char* data);
 void encrypt(uint32_t* left, uint32_t* right);
     Encrypt either 8 bytes of data or two 4-byte integer halves.
     char* result must be freed after use, uint32_t* need not be.
 
+    Note: encrypt_str does not return a pointer, but can return an empty
+    string if len(data) != 8.
+    
     Encryption is as follows:
         With sub-keys i=0...15:
             left = left xor subkey[i]
@@ -43,10 +48,15 @@ void encrypt(uint32_t* left, uint32_t* right);
 
     Note: the above loop is fully unrolled in the implementation code.
 
+
+std::string decrypt_str(std::string data);
 char* decrypt(char* data);
 void decrypt(uint32_t* left, uint32_t* right);
     Decrypt either 8 bytes of data or two 4-byte integer halves.
     char* pointer must be freed after use.
+
+    Note: decrypt_str does not return a pointer, but can return an empty
+    string if len(data) != 8.
 
     Decryption is as follows:
         With sub-keys i=17...2:
@@ -59,6 +69,7 @@ void decrypt(uint32_t* left, uint32_t* right);
         left = left xor subkey[0]
 
     Note: the above loop is fully unrolled in the implementation code.
+
 
 uint32_t function_f(uint32_t data);
     Private function. Implements the Feistel function from the blowfish

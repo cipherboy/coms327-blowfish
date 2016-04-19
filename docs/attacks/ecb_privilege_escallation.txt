@@ -1,0 +1,19 @@
+Block Mode Attacks::ECB Privilege Escalation
+
+This attack uses the weakness of ECB mode, combined with a cut-and-paste
+attack to change an encrypted cookie to escalate role=user to role=admin.
+In particular, the user can enter any email (s)he desires, except for
+those containing special characters & and = (so simply setting the
+email to role=admin would not work). 
+
+First, we detect the absolute length of the original plaintext, by
+detecting when the size increases by a block length. Then, we can
+detect how long the prefix plaintext is by detecting a pair of
+duplicate blocks. Finally, we build a block of value
+"admin\x03\x03\x03" (a correctly padded block), and align
+the user to a fresh block ("user\x04\x04\x04\x04"), before pasting
+the encrypted form of admin over the top, creating role=admin.
+
+Passing this to the is_admin function results in true. 
+
+

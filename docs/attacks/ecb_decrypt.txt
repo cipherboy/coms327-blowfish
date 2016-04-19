@@ -1,0 +1,26 @@
+Block Mode Attacks::ECB Decryption
+
+This attack shows the weakness of ECB, a fault of the duplication of
+identical blocks. In particular, an attacker with access to an 
+encryption function can detect and decrypt any appended text.
+This attack works with a worst case of 257n encryption requests,
+though certainly the search space could be reorganized to improve
+the speed of the attack (e.g., placing frequent English letters
+first), but it is important to note that the attack is linear with
+respect to length.
+
+Thinking about the duplication of blocks, consider a known plaintext,
+P, prepended to the unknown text U. Since blowfish has a block length
+of 8 bytes (the primitive), consider a plaintext of length 7. When
+encrypted under ECB, the first byte of U will instead fill its slot.
+When passed to the remote encryption function, the first block will
+consist of 7 known characters and one unknown character. But since the
+attacker controls the first block, he can brute force all 256 possible
+combinations for the remaining character. This can then be repeated
+with a known plaintext of 6 characters, and then the second unknown
+character of the appended text can be decrypted.
+
+
+Repeating for all blocks reveals the original ciphertext.
+
+

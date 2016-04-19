@@ -11,7 +11,8 @@
 VERSION = Scheel_Alexander.assignment-2
 NAME = blowfish
 CXX ?= g++
-CXXFLAGS = -O0 -mtune=native -Wall -std=c++11 -ggdb -fdiagnostics-color=always
+DEBUGFLAGS = -O0 -ggdb -pg
+CXXFLAGS = $(DEBUGFLAGS) -mtune=native -Wall -std=c++11 -fdiagnostics-color=always
 LFLAGS = -lm -lncurses
 
 CXXSOURCES = $(wildcard src/*.cc)

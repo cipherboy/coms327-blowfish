@@ -115,10 +115,10 @@ blowfish::blowfish(const char* key_data, int key_length)
 uint32_t blowfish::function_f(uint32_t data)
 {
     // Set up each part
-    uint8_t a = (data & 0xFF000000) >> 24;
-    uint8_t b = (data & 0x00FF0000) >> 16;
-    uint8_t c = (data & 0x0000FF00) >> 8;
-    uint8_t d = data & 0x000000FF;
+    uint8_t a = data >> 24;
+    uint8_t b = data >> 16;
+    uint8_t c = data >> 8;
+    uint8_t d = data;
 
     // Feistel function; ensure 32-bit unsigned integer
     uint32_t result = ((this->sboxes[0][a] + this->sboxes[1][b]) ^
